@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "育儿嫂工资",
+  "short_name": "育儿嫂工资",
+  "description": "育儿嫂出勤、休息日和工资计算",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f0e8",
+  "theme_color": "#96604a",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
