@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F4EFE7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="工资打卡">
+
+
+<title>育儿嫂工资打卡</title>
+<style>
+:root{
+  --bg:#f4efe7;--card:#fffdf9;--ink:#302b26;--muted:#81786e;
+  --line:#ded5c8;--accent:#965e47;--accent-soft:#eeddd3;
+  --gold:#9a7b3f;--gold-soft:#f1e7c9;--blank:#f1eee9;
+  --shadow:0 9px 28px rgba(70,55,38,.08)
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+button,input,select{font:inherit}
+.app{width:min(720px,100%);margin:auto;padding:18px 14px 42px}
+h1{font-size:23px;margin:4px 0 5px}.lead{font-size:13px;line-height:1.55;color:var(--muted)}
+.card{margin-top:14px;padding:16px;background:var(--card);border:1px solid rgba(150,94,71,.08);border-radius:18px;box-shadow:var(--shadow)}
+.pay-banner{display:none;background:#fff1da;border-color:#e5c58f}.pay-banner.show{display:block}.pay-banner b{font-size:18px}.pay-banner .big{font-size:27px;font-weight:800;margin-top:7px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.title{font-size:17px;font-weight:750}.sub{font-size:12px;color:var(--muted);line-height:1.55}
+.nav{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;color:var(--ink)}
+.amount{font-size:35px;font-weight:850;letter-spacing:-1px;margin:11px 0 3px}.amount small{font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.stat{padding:10px;border-radius:12px;background:#f7f3ed}.stat span{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}.stat b{font-size:17px}
+.datebox{display:flex;justify-content:space-between;align-items:center;gap:10px}.selected-date{font-size:18px;font-weight:760}.date-add{display:flex;flex-direction:column;align-items:flex-end;gap:4px}.date-add span{font-size:11px;color:var(--muted)}.date-input{max-width:145px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px;color:var(--ink)}
+.holiday-tip{display:none;margin-top:11px;padding:10px 12px;border-radius:12px;background:#fff0e8;color:#793f2e;font-size:14px}.holiday-tip.show{display:block}
+.status{margin:11px 0 12px;color:var(--muted);font-size:14px;line-height:1.55}
+.primary{width:100%;min-height:68px;border:0;border-radius:16px;background:var(--accent);color:#fff;padding:12px 14px;font-size:18px;font-weight:800;box-shadow:0 7px 18px rgba(150,94,71,.2)}
+.primary small{display:block;font-size:12px;font-weight:500;opacity:.86;margin-top:4px}.primary.holiday{background:#9b4d3b}.primary.done{background:#776956}
+.secondary-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.secondary{border:1px solid var(--line);border-radius:13px;background:#fff;padding:11px 8px;color:var(--ink);font-size:14px}.secondary.comp{background:var(--gold-soft);border-color:#e5d39f}.secondary.clear{background:var(--blank)}
+.entry-note{margin-top:11px;font-size:12px;color:var(--muted)}
+.weekheads,.calendar{display:grid;grid-template-columns:repeat(7,1fr)}.weekheads{margin-top:13px;text-align:center;color:var(--muted);font-size:12px}.calendar{gap:6px;margin-top:7px}
+.day{position:relative;aspect-ratio:1/1;border:1px solid var(--line);border-radius:11px;background:#fff;padding:6px;text-align:left;font-size:13px;color:var(--ink)}.day.other{opacity:.33}.day.today{background:#fff3d8}.day.selected{outline:2px solid var(--accent);outline-offset:1px;background:var(--accent-soft)}.day.legal:before{content:"假";position:absolute;top:4px;right:5px;font-size:9px;color:#9b4d3b}.dot{position:absolute;right:6px;bottom:6px;width:8px;height:8px;border-radius:50%}.dot.normal{background:#776956}.dot.holiday{background:#9b4d3b}.dot.comp{background:var(--gold)}
+.selection-tools{display:flex;justify-content:flex-end;margin-top:10px}.selection-tools button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;color:var(--ink);font-size:12px}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+details summary{cursor:pointer;font-weight:750;list-style:none}details summary::-webkit-details-marker{display:none}.settings{display:grid;grid-template-columns:1fr 115px;gap:10px 12px;align-items:center;margin-top:14px}.settings label{font-size:14px}.settings input{width:100%;border:1px solid var(--line);background:#fffaf2;border-radius:9px;padding:8px;text-align:center}
+.holiday-manage{margin-top:15px;padding-top:14px;border-top:1px solid var(--line)}.holiday-add{display:grid;grid-template-columns:1.2fr 1fr auto;gap:8px;margin-top:9px}.holiday-add input{min-width:0;border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px}.holiday-list{max-height:180px;overflow:auto;margin-top:9px;border:1px solid var(--line);border-radius:10px}.holiday-item{display:grid;grid-template-columns:95px 1fr auto;gap:8px;padding:8px 9px;border-bottom:1px solid #eee7dd;font-size:12px}.holiday-item:last-child{border-bottom:0}.mini{border:0;border-radius:8px;background:#eee9e2;padding:5px 7px}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.tool{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px}.danger{color:#8c382a;background:#fff5f1}
+.note{font-size:12px;color:var(--muted);line-height:1.65;margin-top:12px}.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#2f2b26;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.2s;z-index:99}.toast.show{opacity:1}
+@media(min-width:580px){.stats{grid-template-columns:repeat(5,1fr)}.secondary-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>育儿嫂工资打卡</h1>
+  <div class="lead">上班当天点一下。工资周期为每月18日至次月17日，次月18日显示并发放该周期工资。</div>
+
+  <section id="payBanner" class="card pay-banner">
+    <b>今天是发薪日</b>
+    <div id="payBannerCycle" class="sub" style="margin-top:4px"></div>
+    <div id="payBannerAmount" class="big"></div>
+  </section>
+
+  <section class="card">
+    <div class="row">
+      <button id="prevCycle" class="nav">上一期</button>
+      <div id="cycleTitle" class="title"></div>
+      <button id="nextCycle" class="nav">下一期</button>
+    </div>
+    <div class="amount"><span id="salaryAmount">¥0.00</span> <small>本期应发</small></div>
+    <div id="payDateText" class="sub"></div>
+    <div class="stats">
+      <div class="stat"><span>普通上班</span><b id="normalCount">0天</b></div>
+      <div class="stat"><span>节假日双倍</span><b id="holidayCount">0天</b></div>
+      <div class="stat"><span>节假日调休</span><b id="compCount">0天</b></div>
+      <div class="stat"><span>折算工作日</span><b id="equivCount">0天</b></div>
+      <div class="stat"><span>基本日工资</span><b id="dailyRate">0元</b></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="datebox">
+      <div><div id="selectedDateText" class="selected-date"></div><div id="selectedPayCycle" class="sub"></div></div>
+      <div class="date-add"><span>添加指定日期</span><input id="datePicker" class="date-input" type="date"></div>
+    </div>
+    <div id="holidayTip" class="holiday-tip"></div>
+    <div id="selectedStatus" class="status"></div>
+    <button id="workButton" class="primary">批量记录上班<small>普通日期1倍，法定节假日自动2倍</small></button>
+    <div class="secondary-grid">
+      <button id="forceHoliday" class="secondary">批量按法定节假日双倍</button>
+      <button id="compButton" class="secondary comp">批量改为节假日调休</button>
+      <button id="clearButton" class="secondary clear">批量撤销记录</button>
+    </div>
+    <div class="entry-note">在下方日历连续点击多个日期即可多选；再次点击同一日期可取消选择。未打卡日期默认不计工资。</div>
+  </section>
+
+  <section class="card">
+    <div class="row"><button id="prevMonth" class="nav">‹</button><div id="monthTitle" class="title"></div><button id="nextMonth" class="nav">›</button></div>
+    <div class="weekheads"><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div></div>
+    <div id="calendar" class="calendar"></div>
+    <div class="selection-tools"><button id="clearSelection">取消全部选择</button></div>
+    <div class="legend"><span><i style="background:#776956"></i>普通上班</span><span><i style="background:#9b4d3b"></i>节假日双倍</span><span><i style="background:#9a7b3f"></i>节假日调休</span></div>
+  </section>
+
+  <section class="card">
+    <details>
+      <summary>参数、节假日和数据备份</summary>
+      <div class="settings">
+        <label>基本月工资（元）</label><input id="baseSalary" type="number" step="0.01">
+        <label>日工资折算天数</label><input id="divisor" type="number" step="1">
+        <label>法定节假日倍数</label><input id="holidayMultiplier" type="number" step="0.1">
+        <label>工资周期起始日</label><input id="cycleStartDay" type="number" min="1" max="28">
+        <label>每月发薪日</label><input id="payDay" type="number" min="1" max="28">
+      </div>
+      <div class="tools"><button id="saveSettings" class="tool">保存参数</button><button id="exportCsv" class="tool">导出本期明细</button></div>
+
+      <div class="holiday-manage">
+        <b>新增法定节假日</b>
+        <div class="sub">已内置合同列明的2026年法定节假日计薪日。以后年份可在这里补充。</div>
+        <div class="holiday-add"><input id="holidayDate" type="date"><input id="holidayName" placeholder="节日名称"><button id="addHoliday" class="mini">添加</button></div>
+        <div id="holidayList" class="holiday-list"></div>
+      </div>
+
+      <div class="tools">
+        <button id="exportBackup" class="tool">导出全部备份</button>
+        <button id="importBackup" class="tool">导入备份</button>
+        <button id="clearAll" class="tool danger">清空全部打卡</button>
+      </div>
+      <input id="importFile" type="file" accept=".json" hidden>
+      <div class="note">
+        计算公式：普通上班天数 ×（7000÷26）＋法定节假日上班天数 × 2 ×（7000÷26）。<br>
+        法定节假日上班后安排调休时，该上班日按1倍计算，后续调休日不打卡。<br>
+        数据只保存在当前浏览器。更换手机或清理浏览器前，请先导出备份。
+      </div>
+    </details>
+  </section>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+const KEY='nannySalaryTrackerV3';
+const OLD_KEY='nannySalaryTrackerV2';
+const builtInHolidays={
+ '2026-01-01':'元旦',
+ '2026-02-16':'除夕','2026-02-17':'春节初一','2026-02-18':'春节初二','2026-02-19':'春节初三',
+ '2026-04-05':'清明节','2026-05-01':'劳动节','2026-05-02':'劳动节',
+ '2026-06-19':'端午节','2026-09-25':'中秋节',
+ '2026-10-01':'国庆节','2026-10-02':'国庆节','2026-10-03':'国庆节'
+};
+const defaults={settings:{baseSalary:7000,divisor:26,holidayMultiplier:2,cycleStartDay:18,payDay:18},records:{},customHolidays:{}};
+let data=load();
+let selectedDates=new Set([fmt(new Date())]);
+let calendarDate=new Date();
+let shownCycleStart=getCycleStart(new Date());
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function load(){try{const current=localStorage.getItem(KEY);if(current){const x=JSON.parse(current);return {settings:{...defaults.settings,...(x?.settings||{})},records:x?.records||{},customHolidays:x?.customHolidays||{}}}const old=localStorage.getItem(OLD_KEY);if(old){const x=JSON.parse(old);const migrated={settings:{...defaults.settings,...(x?.settings||{}),cycleStartDay:18,payDay:18},records:x?.records||{},customHolidays:x?.customHolidays||{}};localStorage.setItem(KEY,JSON.stringify(migrated));return migrated}return clone(defaults)}catch(e){return clone(defaults)}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function pad(n){return String(n).padStart(2,'0')}
+function fmt(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
+function parse(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
+function cn(d){return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`}
+function week(d){return ['周日','周一','周二','周三','周四','周五','周六'][d.getDay()]}
+function money(v){return '¥'+Number(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function holidays(){return {...builtInHolidays,...data.customHolidays}}
+function holidayName(s){return holidays()[s]||''}
+function getCycleStart(d){const k=Number(data.settings.cycleStartDay);return d.getDate()>=k?new Date(d.getFullYear(),d.getMonth(),k):new Date(d.getFullYear(),d.getMonth()-1,k)}
+function getCycleEnd(s){return addDays(new Date(s.getFullYear(),s.getMonth()+1,Number(data.settings.cycleStartDay)),-1)}
+function getPayDate(s){const e=getCycleEnd(s);return new Date(e.getFullYear(),e.getMonth(),Number(data.settings.payDay))}
+function calc(s){const e=getCycleEnd(s);let d=new Date(s),normal=0,holiday=0,comp=0;while(d<=e){const r=data.records[fmt(d)];if(r==='normal')normal++;else if(r==='holiday')holiday++;else if(r==='comp')comp++;d=addDays(d,1)}const rate=Number(data.settings.baseSalary)/Number(data.settings.divisor);const mult=Number(data.settings.holidayMultiplier);return {normal,holiday,comp,rate,equiv:normal+holiday*mult+comp,salary:normal*rate+holiday*rate*mult+comp*rate}}
+function statusText(r){return r==='normal'?'已记录：普通上班，按1倍基本日工资计算。':r==='holiday'?'已记录：法定节假日上班，按2倍基本日工资计算。':r==='comp'?'已记录：节假日上班并安排调休，按1倍基本日工资计算。':'当天尚未打卡，默认不计工资。'}
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1400)}
+function renderSummary(){const s=shownCycleStart,e=getCycleEnd(s),p=getPayDate(s),r=calc(s);document.getElementById('cycleTitle').textContent=`${s.getMonth()+1}月${s.getDate()}日—${e.getMonth()+1}月${e.getDate()}日`;document.getElementById('salaryAmount').textContent=money(r.salary);document.getElementById('payDateText').textContent=`${cn(p)}发放 · 本期按实际打卡计算`;document.getElementById('normalCount').textContent=r.normal+'天';document.getElementById('holidayCount').textContent=r.holiday+'天';document.getElementById('compCount').textContent=r.comp+'天';document.getElementById('equivCount').textContent=r.equiv+'天';document.getElementById('dailyRate').textContent=r.rate.toFixed(2)+'元'}
+function selectedList(){return [...selectedDates].sort()}function firstSelected(){return selectedList()[0]||fmt(new Date())}function renderSelected(){const dates=selectedList(),tip=document.getElementById('holidayTip'),btn=document.getElementById('workButton');document.getElementById('datePicker').value='';if(!dates.length){document.getElementById('selectedDateText').textContent='尚未选择日期';document.getElementById('selectedPayCycle').textContent='请在日历中点击需要处理的日期';document.getElementById('selectedStatus').textContent='可以一次选择多个不连续日期。';tip.classList.remove('show');tip.textContent='';btn.className='primary';btn.innerHTML='批量记录上班<small>请先选择日期</small>';return}const first=parse(dates[0]),last=parse(dates[dates.length-1]),cycles=new Set(dates.map(k=>fmt(getCycleStart(parse(k))))),summary={normal:0,holiday:0,comp:0,blank:0};for(const k of dates){const r=data.records[k];if(r==='normal')summary.normal++;else if(r==='holiday')summary.holiday++;else if(r==='comp')summary.comp++;else summary.blank++}document.getElementById('selectedDateText').textContent=dates.length===1?`${cn(first)} · ${week(first)}`:`已选择 ${dates.length} 天`;document.getElementById('selectedPayCycle').textContent=dates.length===1?`计入${cn(getPayDate(getCycleStart(first)))}发放的工资`:`${cn(first)}至${cn(last)} · 涉及${cycles.size}个工资周期`;document.getElementById('selectedStatus').textContent=`普通上班${summary.normal}天，节假日双倍${summary.holiday}天，节假日调休${summary.comp}天，未记录${summary.blank}天。`;const legal=dates.filter(k=>holidayName(k));if(legal.length){tip.classList.add('show');tip.textContent=`所选日期中有${legal.length}天法定节假日。批量记录上班时，这些日期会自动按双倍工资计算。`}else{tip.classList.remove('show');tip.textContent=''}btn.className='primary'+(legal.length?' holiday':'')+(summary.blank===0?' done':'');btn.innerHTML=`批量记录${dates.length}天上班<small>普通日期1倍，法定节假日自动2倍</small>`}
+function renderCalendar(){const y=calendarDate.getFullYear(),m=calendarDate.getMonth(),first=new Date(y,m,1),offset=(first.getDay()+6)%7,start=addDays(first,-offset),box=document.getElementById('calendar');document.getElementById('monthTitle').textContent=`${y}年${m+1}月`;box.innerHTML='';for(let i=0;i<42;i++){const d=addDays(start,i),k=fmt(d),b=document.createElement('button');b.className='day';if(d.getMonth()!==m)b.classList.add('other');if(k===fmt(new Date()))b.classList.add('today');if(selectedDates.has(k))b.classList.add('selected');if(holidayName(k))b.classList.add('legal');b.textContent=d.getDate();const r=data.records[k];if(r){const dot=document.createElement('i');dot.className='dot '+r;b.appendChild(dot)}b.onclick=()=>{if(selectedDates.has(k))selectedDates.delete(k);else selectedDates.add(k);if(d.getMonth()!==m)calendarDate=new Date(d.getFullYear(),d.getMonth(),1);if(selectedDates.size)shownCycleStart=getCycleStart(parse(firstSelected()));renderAll()};box.appendChild(b)}}
+function renderPayBanner(){const t=new Date(),box=document.getElementById('payBanner');if(t.getDate()===Number(data.settings.payDay)){const s=new Date(t.getFullYear(),t.getMonth()-1,Number(data.settings.cycleStartDay)),e=getCycleEnd(s),r=calc(s);box.classList.add('show');document.getElementById('payBannerCycle').textContent=`${cn(s)}至${cn(e)}`;document.getElementById('payBannerAmount').textContent=`应发 ${money(r.salary)}`}else box.classList.remove('show')}
+function renderSettings(){for(const k of ['baseSalary','divisor','holidayMultiplier','cycleStartDay','payDay'])document.getElementById(k).value=data.settings[k]}
+function renderHolidayList(){const box=document.getElementById('holidayList');box.innerHTML='';const all=Object.entries(holidays()).sort((a,b)=>a[0].localeCompare(b[0]));for(const [d,n] of all){const row=document.createElement('div');row.className='holiday-item';row.innerHTML=`<span>${d}</span><span>${n}${builtInHolidays[d]?'（内置）':''}</span>`;const action=document.createElement('span');if(data.customHolidays[d]){const del=document.createElement('button');del.className='mini';del.textContent='删除';del.onclick=()=>{delete data.customHolidays[d];save();renderAll();toast('已删除自定义节假日')};action.appendChild(del)}row.appendChild(action);box.appendChild(row)}}
+function renderAll(){renderSummary();renderSelected();renderCalendar();renderPayBanner();renderSettings();renderHolidayList()}
+function requireSelection(){const dates=selectedList();if(!dates.length){alert('请先在日历中选择日期。');return null}return dates}function finishBatch(dates,message){save();shownCycleStart=getCycleStart(parse(dates[0]));renderAll();toast(message)}
+document.getElementById('workButton').onclick=()=>{const dates=requireSelection();if(!dates)return;let legal=0;for(const k of dates){if(holidayName(k)){data.records[k]='holiday';legal++}else data.records[k]='normal'}finishBatch(dates,`已记录${dates.length}天上班${legal?`，其中${legal}天按双倍`:''}`)};
+document.getElementById('forceHoliday').onclick=()=>{const dates=requireSelection();if(!dates)return;for(const k of dates)data.records[k]='holiday';finishBatch(dates,`已将${dates.length}天按双倍工资记录`)};
+document.getElementById('compButton').onclick=()=>{const dates=requireSelection();if(!dates)return;for(const k of dates)data.records[k]='comp';finishBatch(dates,`已将${dates.length}天改为节假日调休`)};
+document.getElementById('clearButton').onclick=()=>{const dates=requireSelection();if(!dates)return;for(const k of dates)delete data.records[k];finishBatch(dates,`已撤销${dates.length}天记录`)};
+document.getElementById('datePicker').onchange=e=>{if(!e.target.value)return;const k=e.target.value;selectedDates.add(k);calendarDate=parse(k);shownCycleStart=getCycleStart(calendarDate);e.target.value='';renderAll()};
+document.getElementById('clearSelection').onclick=()=>{selectedDates.clear();renderSelected();renderCalendar();toast('已取消全部选择')};
+document.getElementById('prevMonth').onclick=()=>{calendarDate=new Date(calendarDate.getFullYear(),calendarDate.getMonth()-1,1);renderCalendar()};document.getElementById('nextMonth').onclick=()=>{calendarDate=new Date(calendarDate.getFullYear(),calendarDate.getMonth()+1,1);renderCalendar()};
+document.getElementById('prevCycle').onclick=()=>{shownCycleStart=new Date(shownCycleStart.getFullYear(),shownCycleStart.getMonth()-1,Number(data.settings.cycleStartDay));renderSummary()};document.getElementById('nextCycle').onclick=()=>{shownCycleStart=new Date(shownCycleStart.getFullYear(),shownCycleStart.getMonth()+1,Number(data.settings.cycleStartDay));renderSummary()};
+document.getElementById('saveSettings').onclick=()=>{const s={};for(const k of ['baseSalary','divisor','holidayMultiplier','cycleStartDay','payDay'])s[k]=Number(document.getElementById(k).value);if(!s.baseSalary||!s.divisor||s.cycleStartDay<1||s.cycleStartDay>28||s.payDay<1||s.payDay>28){alert('参数填写有误，请检查。');return}data.settings=s;save();shownCycleStart=getCycleStart(parse(firstSelected()));renderAll();toast('参数已保存')};
+document.getElementById('addHoliday').onclick=()=>{const d=document.getElementById('holidayDate').value,n=document.getElementById('holidayName').value.trim();if(!d||!n){alert('请填写日期和节日名称。');return}data.customHolidays[d]=n;save();document.getElementById('holidayDate').value='';document.getElementById('holidayName').value='';renderAll();toast('法定节假日已添加')};
+function download(name,text,type){const a=document.createElement('a'),blob=new Blob(['\ufeff'+text],{type});a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+document.getElementById('exportCsv').onclick=()=>{const s=shownCycleStart,e=getCycleEnd(s),rate=Number(data.settings.baseSalary)/Number(data.settings.divisor),mult=Number(data.settings.holidayMultiplier),rows=[['日期','星期','节日','记录','计薪倍数','基本日工资','当日工资']];let d=new Date(s);while(d<=e){const k=fmt(d),r=data.records[k]||'',m=r==='holiday'?mult:(r?1:0),label=r==='normal'?'普通上班':r==='holiday'?'法定节假日上班':r==='comp'?'节假日上班后调休':'未打卡';rows.push([k,week(d),holidayName(k),label,m,rate.toFixed(2),(rate*m).toFixed(2)]);d=addDays(d,1)}download(`育儿嫂工资明细_${fmt(s)}_${fmt(e)}.csv`,rows.map(x=>x.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n'),'text/csv;charset=utf-8')};
+document.getElementById('exportBackup').onclick=()=>download(`育儿嫂工资打卡备份_${fmt(new Date())}.json`,JSON.stringify(data,null,2),'application/json;charset=utf-8');
+document.getElementById('importBackup').onclick=()=>document.getElementById('importFile').click();document.getElementById('importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.settings||!x.records)throw 0;data={settings:{...defaults.settings,...x.settings},records:x.records||{},customHolidays:x.customHolidays||{}};save();renderAll();toast('备份已导入')}catch(err){alert('备份文件无法识别。')}};r.readAsText(f);e.target.value=''};
+document.getElementById('clearAll').onclick=()=>{if(confirm('确定清空全部打卡记录吗？')){data.records={};save();renderAll();toast('已清空全部打卡')}};
+
+renderAll();
+</script>
+</body>
+</html>
