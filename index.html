@@ -9,140 +9,15 @@
 <meta name="apple-mobile-web-app-title" content="育儿嫂工资">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="./icon.svg">
-<title>育儿嫂工资 V2.2</title>
-<link rel="stylesheet" href="./style.css">
-</head>
-<body>
-<main class="app">
-<h1>育儿嫂工资 V2.2</h1>
-<div class="lead">固定月薪7000元，不分大小月。工资周期为每月18日至次月17日，次月18日发薪。每月合同休息4天；法定节假日休息为带薪假，不占用这4天。</div>
-
-<section id="payBanner" class="card pay-banner">
-  <b>今天是发薪日</b>
-  <div id="payBannerCycle" class="sub"></div>
-  <div id="payBannerAmount" class="big"></div>
-  <button id="payBannerImage" class="btn primary" style="margin-top:10px">生成工资单图片</button>
-</section>
-
-<section class="card">
-  <div class="row">
-    <button id="prevCycle" class="nav">上一期</button>
-    <div id="cycleTitle" class="title"></div>
-    <button id="nextCycle" class="nav">下一期</button>
-  </div>
-  <div class="amount" id="salaryAmount">¥7,000.00</div>
-  <div id="payDateText" class="sub"></div>
-  <div class="stats">
-    <div class="stat"><span>固定月薪</span><b id="baseAmount">7000元</b></div>
-    <div class="stat"><span>合同休息</span><b id="restCount">0天</b></div>
-    <div class="stat"><span>标准休息</span><b id="restTarget">4天</b></div>
-    <div class="stat"><span>法定假休息</span><b id="holidayRestCount">0天</b></div>
-    <div class="stat"><span>实际工作</span><b id="workCount">0天</b></div>
-    <div class="stat"><span>法定节假日</span><b id="holidayCount">0天</b></div>
-    <div class="stat"><span>基本日工资</span><b id="dailyRate">269.23元</b></div>
-  </div>
-  <div id="adjustText" class="adjust"></div>
-</section>
-
-<section class="card">
-  <div class="title" style="text-align:left">快速生成本周期</div>
-  <div class="sub">生成后，普通日期默认上班；法定节假日默认标记为带薪休息。再设置实际的合同休息日即可。</div>
-  <div class="quick">
-    <button id="generateAll" class="btn primary">生成本周期</button>
-    <button id="selectCycle" class="btn">选择本周期全部日期</button>
-    <button id="clearCycle" class="btn danger">重置本周期</button>
-  </div>
-</section>
-
-<section class="card">
-  <div id="selectedText" class="selected">尚未选择日期</div>
-  <div id="selectedInfo" class="sub">可点日历多选，也可一次选择连续日期。</div>
-  <div class="range">
-    <label>开始日期<input id="rangeStart" type="date"></label>
-    <label>结束日期<input id="rangeEnd" type="date"></label>
-  </div>
-  <div class="range-actions">
-    <button id="selectRange" class="btn">选择这段日期</button>
-    <button id="clearSelection" class="btn">取消全部选择</button>
-  </div>
-  <div class="actions">
-    <button id="setWork" class="btn primary">设为上班</button>
-    <button id="setRest" class="btn rest-btn">设为休息（节假日不占4天）</button>
-    <button id="setHoliday" class="btn holiday-btn">设为节假日双倍</button>
-    <button id="clearRecords" class="btn danger">清除记录</button>
-  </div>
-</section>
-
-<section class="card">
-  <div class="row"><button id="prevMonth" class="nav">‹</button><div id="monthTitle" class="title"></div><button id="nextMonth" class="nav">›</button></div>
-  <div class="week"><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div></div>
-  <div id="calendar" class="calendar"></div>
-  <div class="legend">
-    <span><i style="background:#6d6257"></i>普通上班</span>
-    <span><i style="background:#a64634"></i>节假日双倍</span>
-    <span><i style="background:#5f8578"></i>合同休息</span>
-    <span><i style="background:#b38b3f"></i>法定假休息</span>
-  </div>
-</section>
-
-<section id="salarySlip" class="card slip">
-  <div class="slip-title">育儿嫂工资确认单</div>
-  <div id="slipCycle" class="sub" style="text-align:center;margin-top:4px"></div>
-  <div class="slip-table">
-    <div class="slip-line"><span>固定月薪</span><b id="slipBase"></b></div>
-    <div class="slip-line"><span>合同休息</span><b id="slipRest"></b></div>
-    <div class="slip-line"><span>法定假休息</span><b id="slipHolidayRest"></b></div>
-    <div class="slip-line"><span>休息日增减</span><b id="slipRestAdjust"></b></div>
-    <div class="slip-line"><span>法定节假日加成</span><b id="slipHoliday"></b></div>
-    <div class="slip-line"><span>实际工作</span><b id="slipWork"></b></div>
-  </div>
-  <div id="slipTotal" class="slip-total"></div>
-  <div class="tools">
-    <button id="downloadSlip" class="btn primary">生成工资单图片</button>
-    <button id="printSlip" class="btn">打印／存为PDF</button>
-  </div>
-</section>
-
-<section id="installCard" class="card install">
-  <div class="title" style="text-align:left">添加到手机桌面</div>
-  <div id="installText" class="note"></div>
-  <button id="installButton" class="btn primary" style="margin-top:10px;display:none">安装到桌面</button>
-</section>
-
-<section class="card">
-<details>
-  <summary>参数、节假日和数据备份</summary>
-  <div class="settings">
-    <label>固定月薪（元）</label><input id="baseSalary" type="number" step="0.01">
-    <label>日工资折算天数</label><input id="divisor" type="number" step="1">
-    <label>每月标准休息天数</label><input id="standardRestDays" type="number" step="1">
-    <label>法定节假日倍数</label><input id="holidayMultiplier" type="number" step="0.1">
-  </div>
-  <div class="tools">
-    <button id="saveSettings" class="btn">保存参数</button>
-    <button id="exportCsv" class="btn">导出本期明细</button>
-  </div>
-  <hr style="border:0;border-top:1px solid var(--line);margin:15px 0">
-  <b>补充法定节假日</b>
-  <div class="sub">保留了原版本中的2026年节假日日期。正式结算前可自行核对、补充或修改。</div>
-  <div class="holiday-add"><input id="holidayDate" type="date"><input id="holidayNameInput" placeholder="节日名称"><button id="addHoliday" class="btn">添加</button></div>
-  <div id="holidayList" class="holiday-list"></div>
-  <div class="tools">
-    <button id="exportBackup" class="btn">导出全部备份</button>
-    <button id="importBackup" class="btn">导入备份</button>
-    <button id="clearAll" class="btn danger">清空全部记录</button>
-  </div>
-  <input id="importFile" type="file" accept=".json" hidden>
-  <div class="note">计算公式：固定月薪7000元＋（4天－合同休息天数）×（7000÷26）＋法定节假日上班天数×额外1倍日工资。法定节假日带薪休息不占用每月4天合同休息额度，也不增加双倍工资。</div>
-</details>
-</section>
-<div id="toast" class="toast"></div>
-</main>
-
-<script src="./app-core.js"></script>
-<script src="./app-ui.js"></script>
-</body>
-</html>
+<link rel="manifest" href="./manifest.webmanifest?v=30"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./icon.svg">
+<title>育儿嫂工资 V3.0</title><link rel="stylesheet" href="./style.css?v=30">
+</head><body><main class="app">
+<h1>育儿嫂工资 V3.0</h1><div class="lead">固定月薪7000元，不分大小月。工资周期为每月18日至次月17日，算头算尾。每周享有1天普通休息，休息日可以调换；本期应休天数按工资周期内实际出现的周六数量自动计算。法定节假日带薪休息不占普通休息额度。</div>
+<section id="payBanner" class="card pay-banner"><b>今天是发薪日</b><div id="payBannerCycle" class="sub"></div><div id="payBannerAmount" class="big"></div><button id="payBannerImage" class="btn primary" style="margin-top:10px">生成工资单图片</button></section>
+<section class="card"><div class="row"><button id="prevCycle" class="nav">上一期</button><div id="cycleTitle" class="title"></div><button id="nextCycle" class="nav">下一期</button></div><div class="amount" id="salaryAmount">¥7,000.00</div><div id="payDateText" class="sub"></div><div class="stats"><div class="stat"><span>固定月薪</span><b id="baseAmount">7000元</b></div><div class="stat"><span>普通休息</span><b id="restCount">0天</b></div><div class="stat"><span>本期应休</span><b id="restTarget">0天</b></div><div class="stat"><span>法定假休息</span><b id="holidayRestCount">0天</b></div><div class="stat"><span>实际工作</span><b id="workCount">0天</b></div><div class="stat"><span>法定节假日上班</span><b id="holidayCount">0天</b></div><div class="stat"><span>基本日工资</span><b id="dailyRate">269.23元</b></div></div><div id="adjustText" class="adjust"></div><div id="weeklyText" class="adjust"></div></section>
+<section class="card"><div class="title" style="text-align:left">快速生成本周期</div><div class="sub">生成后，普通日期默认上班，法定节假日默认带薪休息。再把阿姨实际休息的日期设为“普通休息”即可，休息日不要求必须是周六。</div><div class="quick"><button id="generateAll" class="btn primary">生成本周期</button><button id="selectCycle" class="btn">选择本周期全部日期</button><button id="clearCycle" class="btn danger">重置本周期</button></div></section>
+<section class="card"><div id="selectedText" class="selected">尚未选择日期</div><div id="selectedInfo" class="sub">可点日历多选，也可一次选择连续日期。</div><div class="range"><label>开始日期<input id="rangeStart" type="date"></label><label>结束日期<input id="rangeEnd" type="date"></label></div><div class="range-actions"><button id="selectRange" class="btn">选择这段日期</button><button id="clearSelection" class="btn">取消全部选择</button></div><div class="actions"><button id="setWork" class="btn primary">设为上班</button><button id="setRest" class="btn rest-btn">设为普通休息</button><button id="setHoliday" class="btn holiday-btn">设为节假日双倍</button><button id="clearRecords" class="btn danger">清除记录</button></div></section>
+<section class="card"><div class="row"><button id="prevMonth" class="nav">‹</button><div id="monthTitle" class="title"></div><button id="nextMonth" class="nav">›</button></div><div class="week"><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div></div><div id="calendar" class="calendar"></div><div class="legend"><span><i style="background:#6d6257"></i>普通上班</span><span><i style="background:#a64634"></i>节假日双倍</span><span><i style="background:#5f8578"></i>普通休息</span><span><i style="background:#b38b3f"></i>法定假休息</span></div></section>
+<section id="salarySlip" class="card slip"><div class="slip-title">育儿嫂工资确认单</div><div id="slipCycle" class="sub" style="text-align:center;margin-top:4px"></div><div class="slip-table"><div class="slip-line"><span>固定月薪</span><b id="slipBase"></b></div><div class="slip-line"><span>普通休息</span><b id="slipRest"></b></div><div class="slip-line"><span>法定假休息</span><b id="slipHolidayRest"></b></div><div class="slip-line"><span>休息日增减</span><b id="slipRestAdjust"></b></div><div class="slip-line"><span>法定节假日加成</span><b id="slipHoliday"></b></div><div class="slip-line"><span>实际工作</span><b id="slipWork"></b></div></div><div id="slipTotal" class="slip-total"></div><div class="tools"><button id="downloadSlip" class="btn primary">生成工资单图片</button><button id="printSlip" class="btn">打印／存为PDF</button></div></section>
+<section id="installCard" class="card install"><div class="title" style="text-align:left">添加到手机桌面</div><div id="installText" class="note"></div><button id="installButton" class="btn primary" style="margin-top:10px;display:none">安装到桌面</button></section>
+<section class="card"><details><summary>参数、节假日和数据备份</summary><div class="settings"><label>固定月薪（元）</label><input id="baseSalary" type="number" step="0.01"><label>日工资折算天数</label><input id="divisor" type="number" step="1"><label>法定节假日倍数</label><input id="holidayMultiplier" type="number" step="0.1"></div><input id="standardRestDays" type="hidden" value="0"><div class="tools"><button id="saveSettings" class="btn">保存参数</button><button id="exportCsv" class="btn">导出本期明细</button></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><b>补充法定节假日</b><div class="sub">正式结算前请核对法定节假日日期。</div><div class="holiday-add"><input id="holidayDate" type="date"><input id="holidayNameInput" placeholder="节日名称"><button id="addHoliday" class="btn">添加</button></div><div id="holidayList" class="holiday-list"></div><div class="tools"><button id="exportBackup" class="btn">导出全部备份</button><button id="importBackup" class="btn">导入备份</button><button id="clearAll" class="btn danger">清空全部记录</button></div><input id="importFile" type="file" accept=".json" hidden><div class="note">计算规则：本期应休天数等于工资周期内周六数量。休息可以调到其他日期；上周未休可顺延到下一周，最多结转1天。法定节假日带薪休息不占普通休息额度。</div></details></section><div id="toast" class="toast"></div></main><script src="./app-core.js?v=30"></script><script src="./app-ui.js?v=30"></script></body></html>
