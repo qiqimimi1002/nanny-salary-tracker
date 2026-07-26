@@ -20,5 +20,5 @@ function downloadSalarySlip(s=shownCycleStart){const e=getCycleEnd(s),r=calc(s),
 downloadSlip.onclick=()=>downloadSalarySlip();printSlip.onclick=()=>window.print();
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installButton.style.display='block';installButton.onclick=async()=>{deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installButton.style.display='none'}});
 function renderInstall(){const ios=/iphone|ipad|ipod/i.test(navigator.userAgent),standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone;if(standalone)return;installCard.classList.add('show');installText.textContent=ios?'iPhone：用Safari打开网页，点底部“分享”，再选“添加到主屏幕”。':'安卓：点浏览器菜单中的“安装应用”或“添加到主屏幕”。'}
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=30').catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=31').catch(()=>{}));
 const toastBox=document.getElementById('toast');rangeStart.value=fmt(shownCycleStart);rangeEnd.value=fmt(getCycleEnd(shownCycleStart));renderAll();renderInstall();
